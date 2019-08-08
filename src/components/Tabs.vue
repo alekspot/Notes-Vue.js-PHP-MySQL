@@ -103,7 +103,7 @@ export default {
         position: relative;
         display:flex;
         left:0;
-        transition: 0.5s;  
+        transition: left 0.5s;  
     }
     .tabs__item {  
         flex: 0 0 100%;

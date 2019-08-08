@@ -9,6 +9,13 @@ window.addEventListener('load',()=>{
         store,
         el:'#app',
         render: h=>h(App),
-         
+        methods:{
+            call(){
+                store.dispatch('initPostList')
+            }
+        },
+        mounted(){
+            this.call();
+        }    
     })
 })

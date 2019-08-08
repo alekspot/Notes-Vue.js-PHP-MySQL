@@ -1,26 +1,40 @@
 <template>
+<div>
+    <div v-for="(file,index) in files" :key="index">{{file.name}}</div>
     <div class="input">
-        <div class="input__wrap">
+        <form class="input__wrap" id="uploadForm" method="POST" enctype="multipart/form-data">
             <textarea v-model="text" class="input__input" type="text"></textarea>
-            <label class="input__label" for="file"><i class="material-icons">attach_file</i></label>
-            <input class="input__inputFile" type="file" name="addFile" id="file">
-            <button @click="clearInput" class="input__clear ripple"><i class="material-icons">close</i></button>
-        </div>    
-        <button class="input__btn ripple">Добавить</button>
+            <label   class="input__label" for="file"><i class="material-icons">attach_file</i></label>
+            <input @change="previewFiles" class="input__inputFile" ref="inputFiles" type="file" name="pictures[]" id="file" multiple accept=".jpg, .jpeg, .png">
+            <button @click.prevent="clearInput" class="input__clear ripple"><i class="material-icons">close</i></button>
+        </form>    
+        <button @click="addPost" class="input__btn ripple">Добавить</button>
     </div>
+</div>
+    
 </template>
 <script>
 export default {
     name:'Appinput',
     data(){
         return {
-            text:''
+            text:'',
+            files:[]
         }
     },
     methods:{
         clearInput(){
-            this.text=''
-        }
+            this.text='',
+            this.files = []
+        },
+        addPost(){
+            let data = {text:this.text,files:this.files}
+            this.$store.dispatch('addPost', data);
+            this.clearInput();
+        },
+        previewFiles() {
+            this.files = this.$refs.inputFiles.files
+        },
     }
 }
 </script>
