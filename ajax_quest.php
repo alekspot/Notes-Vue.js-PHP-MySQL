@@ -9,14 +9,15 @@ $table = $_POST['table'];
 $query = $db->prepare("SELECT * FROM $table");
 $query->execute();
 
-$apps = $query->fetchAll(PDO::FETCH_ASSOC);
+//Получаем массив таблицы
+$dataArr = $query->fetchAll(PDO::FETCH_ASSOC);
 
 //Вставляет HTML код разрыва строки перед каждым переводом строки
-foreach ($apps as &$value) {
+foreach ($dataArr as &$value) {
     $value['text'] = nl2br($value['text']);
 }
 
-$json = json_encode($apps);
+$json = json_encode($dataArr);
 //возвращаем таблицу
 echo $json;
 ?>

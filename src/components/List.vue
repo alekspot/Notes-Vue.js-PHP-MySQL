@@ -2,13 +2,14 @@
     <ul class="list">
         <li   v-for="(post,index) in postList" class="list__item" :key="index">
             <div class="list__post">
-                <h3>{{post.dt|dateFormat}}</h3>
+                <p class="list__date">{{post.dt|dateFormat}}</p>
                 <img class="list__img" v-for="img in imgFilter(post.img)" :key="img"  :src="'../uploads/' + img" alt="">
-                <p v-html="post.text"></p>   
+                <p v-html="post.text" v-linkified></p>  
+
+                 <!--v-html="table[index].text"   -->
             </div>
             <div class="list__actions">
                 <button @click="deletePost(post.id)" class="list__actions_delete ripple"><i class="material-icons">delete</i></button>
-                 
             </div>           
            
         </li>
@@ -37,10 +38,10 @@ export default {
             let date = dt.substring(0,10);
             let time = dt.substring(11,16);
             var monthNames = [
-                "Января", "Февраля", "Марта",
-                "Апреля", "Мая", "Июня", "Июля",
-                "Августа", "Сентября", "Октября",
-                "Ноября", "Декабря"
+                "января", "февраля", "марта",
+                "апреля", "мая", "июня", "июля",
+                "августа", "сентября", "октября",
+                "ноября", "декабря"
             ];
             let monthId; 
                       
@@ -58,7 +59,7 @@ export default {
             let month = monthNames[monthId-1];
             let year = arr[0];
             
-           return `${day}  ${month}  ${year}`;
+           return `Добавлено ${day}  ${month}  ${year} в ${time}`;
         }    
     }
 }
@@ -94,5 +95,9 @@ export default {
         outline:none;
         color: gray;
         cursor: pointer;
+    }
+    .list__date {
+        font-size: 12px;
+        font-weight: bold
     }
 </style>

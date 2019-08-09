@@ -20,7 +20,7 @@ export default {
         }
     },
     computed:{
-         getPosts:function(){
+        getPosts:function(){
             return this.$store.getters.postLists
         }
     }
@@ -30,5 +30,9 @@ export default {
   .app{
       box-sizing: border-box;
       font-family: Arial;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
   }
 </style>

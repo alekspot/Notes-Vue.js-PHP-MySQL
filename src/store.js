@@ -46,16 +46,14 @@ export const store = new Vuex.Store({
            }
            readTable();
         },
-        /** */
         addPost({state},payload){
             if(payload.text!='' || payload.files.length!=0){
                 let data = new FormData(document.getElementById('uploadForm'));
+                
                 data.append('file', payload.files);
 
                 let table = state.currentTab;
                 let msg = payload.text;
-
-               // this.text = '';
                 
                 data.append('table', table);
                 data.append('msg', msg);

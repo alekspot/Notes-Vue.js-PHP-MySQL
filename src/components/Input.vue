@@ -1,6 +1,7 @@
 <template>
 <div>
     <div v-for="(file,index) in files" :key="index">{{file.name}}</div>
+    <div v-for="(file,index) in files" :key="index">{{file}}</div>
     <div class="input">
         <form class="input__wrap" id="uploadForm" method="POST" enctype="multipart/form-data">
             <textarea v-model="text" class="input__input" type="text"></textarea>
@@ -24,8 +25,9 @@ export default {
     },
     methods:{
         clearInput(){
-            this.text='',
-            this.files = []
+            this.text='';
+            this.files = [];
+            this.$refs.inputFiles.files = null
         },
         addPost(){
             let data = {text:this.text,files:this.files}
@@ -33,7 +35,8 @@ export default {
             this.clearInput();
         },
         previewFiles() {
-            this.files = this.$refs.inputFiles.files
+            this.files = this.$refs.inputFiles.files;
+            console.log(this.files);
         },
     }
 }
