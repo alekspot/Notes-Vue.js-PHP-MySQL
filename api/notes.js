@@ -1,70 +1,35 @@
-export default {
+import axios from 'axios';
 
+const tables = ['notes','code','books']
+
+async function getPosts(){
+    let posts = [];
+    for(let i = 0; i < tables.length; i++){
+        let response =  await axios.post('../ajax_quest.php', {
+            'table': tables[i]
+        })
+        posts.push(response.data);
+    }
+    return posts;    
 }
 
-getPostLists(){
-    let counter = 0;
-    let arr = [];
-    const readTable = function(){
-        if(counter < state.tables.length){
-         
-         axios.post('../ajax_quest.php', {
-             'table': state.tables[counter]
-         })
-         .then(function (response) {
-             arr.push(response.data);
-             counter++;
-             readTable();
-         })
-         .catch(function (error) {
-             console.log(error);
-         });
-        } else {
-         commit('INIT_POST_LIST', arr);
-        }  
-    }
-    readTable();
- }
+async function deletePost(table,postId){
+    await axios.post('../ajax_remove.php', {
+        table: table,
+        postId: postId
+    })   
+}
+async function addPost(postData){
+    await axios.post('../ajax_add.php', postData, {
+        headers: {
+        'Content-Type': 'multipart/form-data'
+        }
+    })
+}
 
+export default {
+    getPosts,
+    deletePost,
+    addPost
+}
 
- addPost({state},payload){
-     if(payload.text!='' || payload.files.length!=0){
-         let data = new FormData(document.getElementById('uploadForm'));
-         
-         data.append('file', payload.files);
-
-         let table = state.currentTab;
-         let msg = payload.text;
-         
-         data.append('table', table);
-         data.append('msg', msg);
-         axios.post('../ajax_add.php', data, {
-         headers: {
-         'Content-Type': 'multipart/form-data'
-         }
-         }).then(function (response) {
-                //this.files =[];
-                 store.dispatch('initPostList');
-                 console.log(response);
-             })
-             .catch(function (error) {
-                 console.log(error);
-             });
-     }        
- }
- deletePost({state},payload){
-     let table = state.currentTab;
-     let postId = payload;
-     
-     axios.post('../ajax_remove.php', {
-         table: table,
-         postId: postId
-     })
-     .then(function (response) {
-         store.dispatch('initPostList');
-         console.log(response);
-     })
-     .catch(function (error) {
-         console.log(error);
-     });
- }

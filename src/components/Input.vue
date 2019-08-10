@@ -25,19 +25,27 @@ export default {
     methods:{
         clearInput(){
             this.text='';
-            
+            this.$refs.form.reset();
+            this.files = [];
         },
         addPost(){
-            let data = {text:this.text,files:this.files}
+            let postData = new FormData(this.$refs.form);
+            let data = {
+                text:this.text,
+                haveFiles:this.haveFiles,
+                postData  
+            }
             this.$store.dispatch('addPost', data);
-           // this.clearInput();
-           this.$refs.form.reset();
-           this.files = [];
+            this.clearInput();
         },
         previewFiles() {
             this.files = this.$refs.inputFiles.files;
-            console.log(this.files);
         },
+    },
+    computed:{
+        haveFiles(){
+            return this.files.length!=0 ? true : false
+        }
     }
 }
 </script>

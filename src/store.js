@@ -1,9 +1,8 @@
 import Vue from "vue";
 import Vuex from 'vuex';
 Vue.use(Vuex);
-import axios from 'axios';
 
-//import notes from '../api/notes';
+import api from '../api/notes';
 
 import "regenerator-runtime/runtime";
 
@@ -28,62 +27,28 @@ export const store = new Vuex.Store({
         changeTable({commit},payload){
             commit('CHANGE_TABLE',payload)
         },
-        initPostList({commit,state}){
-           let arr = [];
-           const readTable = async function(){
-
-                for(let i = 0; i<state.tables.length;i++){
-
-                    let response =  await axios.post('../ajax_quest.php', {
-                        'table': state.tables[i]
-                    })
-                    arr.push(response.data);
-                }                
-           }
-           readTable();
-           commit('INIT_POST_LIST', arr);
-           
+        initPostList({commit}){
+            api.getPosts().then((posts)=>{
+                commit('INIT_POST_LIST', posts);
+            });
         },
         addPost({state},payload){
-            if(payload.text!='' || payload.files.length!=0){
-                let data = new FormData(document.getElementById('uploadForm'));
-                
-                data.append('file', payload.files);
+            if(payload.text!='' || payload.haveFiles){
 
-                let table = state.currentTab;
-                let msg = payload.text;
-                
-                data.append('table', table);
-                data.append('msg', msg);
-                axios.post('../ajax_add.php', data, {
-                headers: {
-                'Content-Type': 'multipart/form-data'
-                }
-                }).then(function (response) {
-                       //this.files =[];
-                        store.dispatch('initPostList');
-                        console.log(response);
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                payload.postData.append('table', state.currentTab);
+                payload.postData.append('msg', payload.text);
+                // postData содержит в себе текст и картинки поста 
+                api.addPost(payload.postData).then(()=>{
+                    store.dispatch('initPostList');
+                })
             }        
         },
         deletePost({state},payload){
             let table = state.currentTab;
             let postId = payload;
-            
-            axios.post('../ajax_remove.php', {
-                table: table,
-                postId: postId
-            })
-            .then(function (response) {
+            api.deletePost(table, postId).then(()=>{
                 store.dispatch('initPostList');
-                console.log(response);
             })
-            .catch(function (error) {
-                console.log(error);
-            });
         }
     },
     getters:{
