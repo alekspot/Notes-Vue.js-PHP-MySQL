@@ -5,6 +5,8 @@ import axios from 'axios';
 
 //import notes from '../api/notes';
 
+import "regenerator-runtime/runtime";
+
 export const store = new Vuex.Store({
     state:{
         //Названия таблиц в БД
@@ -27,27 +29,20 @@ export const store = new Vuex.Store({
             commit('CHANGE_TABLE',payload)
         },
         initPostList({commit,state}){
-           let counter = 0;
            let arr = [];
-           const readTable = function(){
-               if(counter < state.tables.length){
-                
-                axios.post('../ajax_quest.php', {
-                    'table': state.tables[counter]
-                })
-                .then(function (response) {
+           const readTable = async function(){
+
+                for(let i = 0; i<state.tables.length;i++){
+
+                    let response =  await axios.post('../ajax_quest.php', {
+                        'table': state.tables[i]
+                    })
                     arr.push(response.data);
-                    counter++;
-                    readTable();
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-               } else {
-                commit('INIT_POST_LIST', arr);
-               }  
+                }                
            }
            readTable();
+           commit('INIT_POST_LIST', arr);
+           
         },
         addPost({state},payload){
             if(payload.text!='' || payload.files.length!=0){
