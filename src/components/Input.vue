@@ -1,9 +1,8 @@
 <template>
 <div>
     <div v-for="(file,index) in files" :key="index">{{file.name}}</div>
-    <div v-for="(file,index) in files" :key="index">{{file}}</div>
     <div class="input">
-        <form class="input__wrap" id="uploadForm" method="POST" enctype="multipart/form-data">
+        <form ref="form" class="input__wrap" id="uploadForm" method="POST" enctype="multipart/form-data">
             <textarea v-model="text" class="input__input" type="text"></textarea>
             <label   class="input__label" for="file"><i class="material-icons">attach_file</i></label>
             <input @change="previewFiles" class="input__inputFile" ref="inputFiles" type="file" name="pictures[]" id="file" multiple accept=".jpg, .jpeg, .png">
@@ -26,13 +25,14 @@ export default {
     methods:{
         clearInput(){
             this.text='';
-            this.files = [];
-            this.$refs.inputFiles.files = null
+            
         },
         addPost(){
             let data = {text:this.text,files:this.files}
             this.$store.dispatch('addPost', data);
-            this.clearInput();
+           // this.clearInput();
+           this.$refs.form.reset();
+           this.files = [];
         },
         previewFiles() {
             this.files = this.$refs.inputFiles.files;

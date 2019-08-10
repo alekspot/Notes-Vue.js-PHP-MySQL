@@ -2,6 +2,9 @@ import Vue from "vue";
 import Vuex from 'vuex';
 Vue.use(Vuex);
 import axios from 'axios';
+
+//import notes from '../api/notes';
+
 export const store = new Vuex.Store({
     state:{
         //Названия таблиц в БД

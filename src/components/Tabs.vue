@@ -15,6 +15,7 @@
 </template>
 <script>
 import List from './List.vue'
+import { setTimeout } from 'timers';
 export default {
     name:'Tabs',
     props:['posts'],
@@ -37,7 +38,7 @@ export default {
     },
     methods:{
         resizeTabs(){
-            this.line.width = this.$refs.tabItem[0].offsetWidth;
+            this.line.width = this.$refs.tabItem[0].offsetWidth;  
             //сдесь нужно будет добавть индекс массива 
             this.slide.width = this.$refs.slide.offsetWidth;
             this.updateLeft(this.line);
@@ -47,8 +48,6 @@ export default {
             this.currentTab = n;  
             this.setLeft(this.line,n);
             this.setLeft(this.slide,n);
-            
-            
             this.$store.dispatch('changeTable', n);
         },
         setLeft(elem, n){
@@ -85,6 +84,7 @@ export default {
         list-style: none;
         padding: 0;
         margin:0;
+        position: relative;
     }
     .tabs__navigationItem {
         flex:1;
@@ -94,10 +94,11 @@ export default {
     }  
     .tabs__line {
         position: absolute;
-        border-bottom:solid 4px rgb(7, 177, 245);
+        background:red;
         padding: 0;
-        padding-top: 37px;
+        height: 2px;
         transition: 0.5s;
+        bottom: 0;
     }
     .tabs__window {
         position: relative;

@@ -74,6 +74,7 @@ export default {
         display:flex;
         align-items: center;
         min-height: 80px;
+        padding:10px;
     }
     .list__post {
         flex:1;
