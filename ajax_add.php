@@ -22,7 +22,6 @@ $text = strip_tags($_POST['msg']);
 
 //$text = htmlentities($_POST['msg'], ENT_QUOTES, "UTF-8");
 //$text = htmlspecialchars($_POST['msg'], ENT_QUOTES);
-//strtr($text, array('&' => '&amp;', '<' => '&lt;', '>' => '&gt;', "\n" => '<br>') );
 
 $db = new PDO('mysql:host=localhost;dbname=wall','root','');
 $db->exec("SET NAMES UTF8");

@@ -1,9 +1,9 @@
 <template>
-<div>
+<div class="app__input">
     <div v-for="(file,index) in files" :key="index">{{file.name}}</div>
     <div class="input">
         <form ref="form" class="input__wrap" id="uploadForm" method="POST" enctype="multipart/form-data">
-            <textarea v-model="text" class="input__input" type="text"></textarea>
+            <textarea @keyup.enter='addPost' v-model="text" class="input__input" type="text"></textarea>
             <label   class="input__label" for="file"><i class="material-icons">attach_file</i></label>
             <input @change="previewFiles" class="input__inputFile" ref="inputFiles" type="file" name="pictures[]" id="file" multiple accept=".jpg, .jpeg, .png">
             <button @click.prevent="clearInput" class="input__clear ripple"><i class="material-icons">close</i></button>
@@ -50,6 +50,11 @@ export default {
 }
 </script>
 <style lang="less">
+    .app__input {
+        position: fixed;
+        bottom:0;
+        width: 100%;
+    }
    .input {
        display: flex;
    }

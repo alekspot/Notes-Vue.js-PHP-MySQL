@@ -1,14 +1,12 @@
 <template>
     <ul class="list">
-        <li   v-for="(post,index) in postList" class="list__item" :key="index">
+        <li @dblclick="showAction = !showAction" v-for="(post,index) in postList" class="list__item" :key="index">
             <div class="list__post">
                 <p class="list__date">{{post.dt|dateFormat}}</p>
                 <img class="list__img" v-for="img in imgFilter(post.img)" :key="img"  :src="'../uploads/' + img" alt="">
                 <p v-html="post.text" v-linkified></p>  
-
-                 <!--v-html="table[index].text"   -->
             </div>
-            <div class="list__actions">
+            <div v-if="showAction" class="list__actions noselect">
                 <button @click="deletePost(post.id)" class="list__actions_delete ripple"><i class="material-icons">delete</i></button>
             </div>           
            
@@ -21,7 +19,7 @@ export default {
    props:['postList'],
     data(){
         return {
-           
+           showAction : false
         }
     },
     methods:{

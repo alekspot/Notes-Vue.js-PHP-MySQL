@@ -9,7 +9,9 @@ async function getPosts(){
             'table': tables[i]
         })
         posts.push(response.data);
+        
     }
+
     return posts;    
 }
 

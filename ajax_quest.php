@@ -16,8 +16,8 @@ $dataArr = $query->fetchAll(PDO::FETCH_ASSOC);
 foreach ($dataArr as &$value) {
     $value['text'] = nl2br($value['text']);
 }
-
-$json = json_encode($dataArr);
+$newArr = array_reverse($dataArr);
+$json = json_encode($newArr);
 //возвращаем таблицу
 echo $json;
 ?>

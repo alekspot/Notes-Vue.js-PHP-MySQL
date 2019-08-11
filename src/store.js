@@ -53,6 +53,11 @@ export const store = new Vuex.Store({
     },
     getters:{
         currentTab:state => state.currentTab,
-        postLists:state => state.postLists
+        postLists:state => state.postLists,
+        // searchPost:function(state){
+        //     return state.postLists.filter(function(lists,item){
+        //         return item.include('Са');
+        //     })
+        // } 
     }
 })

@@ -1,5 +1,6 @@
 <template>
     <div class="app">
+        <Search></Search>
         <Tabs :posts="getPosts"></Tabs>
         <AppInput></AppInput>
         
@@ -8,11 +9,12 @@
 <script>
 import Tabs from './Tabs.vue'
 import AppInput from './Input.vue'
-
+import Search from './Search.vue'
 export default {
     components:{
         Tabs,
-        AppInput
+        AppInput,
+        Search
     },
     data(){
         return {
@@ -33,7 +35,11 @@ export default {
       height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      //justify-content: space-between;
+      position: relative;
      
+  }
+  .noselect{
+      user-select: none;
   }
 </style>
