@@ -70,34 +70,15 @@ export const store = new Vuex.Store({
         searchPost:function(state){
             let arr = [];
            for(let i = 0;i<state.postLists.length;i++){
-            //console.log(state.postLists[i]);
             
             let find = state.postLists[i].filter((value)=>{
                 if(state.searchText!==''){
                     return value.text.includes(state.searchText)
                 } else return false
-                
-                //return value.text == state.searchText
             })
-            arr.push(find);
-            //list - массив постов в таблице
-            //list[item] - объект поста
-
-            // arr = list.filter((objPost)=>{
-            //     return objPost.text == 'Саша'
-            // })
-            // if(arr.length > 0){
-            //     console.log('Есть совпадение');
-            //     searchResult.push(arr);
-            // }
-            
+            arr.push(find);   
            }
           return arr;
-               
-            
-            // return state.postLists.filter(function(lists,item){
-            //     return item.include('Са');
-            // })
         } 
     }
 })

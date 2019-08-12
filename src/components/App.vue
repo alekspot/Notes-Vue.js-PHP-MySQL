@@ -10,6 +10,7 @@
 import Tabs from './Tabs.vue'
 import AppInput from './Input.vue'
 import Search from './Search.vue'
+import { setInterval } from 'timers';
 export default {
     components:{
         Tabs,
@@ -36,6 +37,11 @@ export default {
             }
             return this.allPosts
         }
+    },
+    created(){
+        setInterval(()=>{
+            this.$store.dispatch('initPostList');
+        },2000)  
     }
 }
 </script>
