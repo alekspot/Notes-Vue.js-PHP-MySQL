@@ -1,7 +1,7 @@
 <template>
     <div class="app">
         <Search></Search>
-        <Tabs :posts="getPosts"></Tabs>
+        <Tabs :posts="whatShow"></Tabs>
         <AppInput></AppInput>
         
     </div>  
@@ -18,12 +18,23 @@ export default {
     },
     data(){
         return {
-        
+           
         }
     },
     computed:{
-        getPosts:function(){
+        allPosts:function(){
             return this.$store.getters.postLists
+        },
+        foundPosts(){
+            return this.$store.getters.searchPost
+        },
+        whatShow(){
+            for(let i = 0;i < this.foundPosts.length; i++){
+                if(this.foundPosts[i].length>0){
+                    return this.foundPosts;
+                }
+            }
+            return this.allPosts
         }
     }
 }

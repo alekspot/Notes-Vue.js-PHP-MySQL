@@ -51,9 +51,11 @@ export default {
 </script>
 <style lang="less">
     .app__input {
-        position: fixed;
+       position: fixed;
+        padding: 0 33px 10px 5px;
         bottom:0;
-        width: 100%;
+        width: 98.4%;
+        background:#fff;
     }
    .input {
        display: flex;

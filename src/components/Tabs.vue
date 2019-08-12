@@ -2,30 +2,11 @@
     <div class="tabs">
         <ul class="tabs__navigation">
            <li class="tabs__navigationItem ripple" ref="tabItem" v-for="(category, index) in categories" :key="category" @click="chooseList(index)">{{category}}</li>
-           <li class="tabs__navigationItem tabs__line" :style="setWidthLine"></li>
+           <li class="tabs__line" :style="setWidthLine"></li>
         </ul>
-         <!-- <div ref="slide" class="tabs__window" :style="setWidthSlide">
-            <List v-for="(list,index) in posts" 
-                :postList="list" 
-                class="tabs__item"
-                :key="index">
-            </List>
-         </div> -->
-
-
-
- <!-- v-on:before-enter="resizeTabs"
-
-            v-on:after-enter="resizeTabs"
-            v-on:enter-cancelled="resizeTabs"
-
-            v-on:before-leave="resizeTabs"
-            v-on:leave="resizeTabs"
-            v-on:after-leave="resizeTabs"
-            v-on:leave-cancelled="resizeTabs" -->
 
          <div ref="slide" class="tabs__window">
-            <transition name="slide" mode="out-in">   
+            <transition name="slide" mode="out-in"  v-on:enter="afterEnter">   
                 <List :postList="posts[currentTab]" class="tabs__item" :key="currentTab"></List>
             </transition> 
          </div>
@@ -52,6 +33,10 @@ export default {
         }
     },
     methods:{
+        afterEnter(){
+            setTimeout(this.resizeTabs,20)
+            
+        },
         resizeTabs(){
             this.line.width = this.$refs.tabItem[0].clientWidth;
             this.updateLeft(this.line);
@@ -83,19 +68,13 @@ export default {
 </script>
 <style lang="less">
 .slide-enter-active, .slide-leave-active {
-  transition: all 0.6s;
+  transition: all 0.4s;
 }
 .slide-enter, .slide-leave-to {
   opacity: 0;
   transform: translateX(-100%);
 }
-
-
-
-
-
     .tabs {
-        //overflow: hidden;
         position: relative;
     }
     .tabs__navigation {
@@ -105,8 +84,9 @@ export default {
         margin:0;
         position: fixed;
         width: 100%;
-        z-index: 100;
+        z-index: 200;
         background:#fff;
+        top:54px;
     }
     .tabs__navigationItem {
         flex:1;
@@ -119,14 +99,14 @@ export default {
         background:gray;
         padding: 0;
         height: 2px;
-        transition: left 0.5s;
+        transition: left 0.4s;
         bottom: 0;
     }
     .tabs__window {
-        position: relative;
+        
         display:flex;
-        margin:40px 0;
-        left:0;
+        margin:80px 0 40px;
+       
     }
     .tabs__item {  
         flex: 0 0 100%;

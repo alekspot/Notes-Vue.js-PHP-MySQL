@@ -13,7 +13,8 @@ export const store = new Vuex.Store({
         //текущая вкладка
         currentTab:'notes',
         //список постов получаемых с сервера
-        postLists:[]
+        postLists:[],
+        searchText:null
     },
     mutations:{
         'CHANGE_TABLE' (state,payload){
@@ -21,9 +22,21 @@ export const store = new Vuex.Store({
         },
         'INIT_POST_LIST' (state, payload){
             state.postLists = payload
+        },
+        'SET_SEARCH' (state, payload){
+            state.searchText = payload;
+        },
+        'CLEAR_SEARCH' (state){
+            state.searchText = '';
         }
     },
     actions:{
+        clearSearch({commit}){
+            commit('CLEAR_SEARCH')
+        },
+        setSearch({commit},payload){
+            commit('SET_SEARCH',payload)
+        },
         changeTable({commit},payload){
             commit('CHANGE_TABLE',payload)
         },
@@ -54,10 +67,37 @@ export const store = new Vuex.Store({
     getters:{
         currentTab:state => state.currentTab,
         postLists:state => state.postLists,
-        // searchPost:function(state){
-        //     return state.postLists.filter(function(lists,item){
-        //         return item.include('Са');
-        //     })
-        // } 
+        searchPost:function(state){
+            let arr = [];
+           for(let i = 0;i<state.postLists.length;i++){
+            //console.log(state.postLists[i]);
+            
+            let find = state.postLists[i].filter((value)=>{
+                if(state.searchText!==''){
+                    return value.text.includes(state.searchText)
+                } else return false
+                
+                //return value.text == state.searchText
+            })
+            arr.push(find);
+            //list - массив постов в таблице
+            //list[item] - объект поста
+
+            // arr = list.filter((objPost)=>{
+            //     return objPost.text == 'Саша'
+            // })
+            // if(arr.length > 0){
+            //     console.log('Есть совпадение');
+            //     searchResult.push(arr);
+            // }
+            
+           }
+          return arr;
+               
+            
+            // return state.postLists.filter(function(lists,item){
+            //     return item.include('Са');
+            // })
+        } 
     }
 })
