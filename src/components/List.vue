@@ -4,7 +4,7 @@
             <div class="list__post">
                 <p class="list__date">{{post.dt|dateFormat}}</p>
                 <img class="list__img" v-for="img in imgFilter(post.img)" :key="img"  :src="'../uploads/' + img" alt="">
-                <p class="list__text" v-html="post.text" v-linkified></p>  
+                <p class="list__text" v-html="post.text" v-linkified:options="{ className: 'list__link' }"></p>  
             </div>
             <div v-if="showAction" class="list__actions noselect">
                 <button @click="deletePost(post.id)" class="list__actions_delete ripple"><i class="material-icons">delete</i></button>
@@ -84,10 +84,13 @@ export default {
         max-width: 200px;
     }
     .list__text {
-        
+       
+    }
+    .list__link {
+        word-break: break-all;
     }
     .list__actions {
-        margin-right: 30px
+        margin:0 15px
     }
     .list__actions_delete{
         background: none;

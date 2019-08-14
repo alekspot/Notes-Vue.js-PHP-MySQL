@@ -66,8 +66,7 @@ export default {
        flex:1;
    }
    .input__input {
-       padding-top: 10px;
-       padding-left: 30px;
+       padding: 10px 30px 0 30px;
        font-size: 18px;
        resize: none;
        border-radius: 5px 0 0 5px; 
