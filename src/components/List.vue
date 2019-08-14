@@ -4,7 +4,7 @@
             <div class="list__post">
                 <p class="list__date">{{post.dt|dateFormat}}</p>
                 <img class="list__img" v-for="img in imgFilter(post.img)" :key="img"  :src="'../uploads/' + img" alt="">
-                <p v-html="post.text" v-linkified></p>  
+                <p class="list__text" v-html="post.text" v-linkified></p>  
             </div>
             <div v-if="showAction" class="list__actions noselect">
                 <button @click="deletePost(post.id)" class="list__actions_delete ripple"><i class="material-icons">delete</i></button>
@@ -73,12 +73,18 @@ export default {
         align-items: center;
         min-height: 80px;
         padding:10px;
+        justify-content: space-between;
     }
     .list__post {
-        flex:1;
+        
+        
+        
     }
     .list__img {
         max-width: 200px;
+    }
+    .list__text {
+        
     }
     .list__actions {
         margin-right: 30px
