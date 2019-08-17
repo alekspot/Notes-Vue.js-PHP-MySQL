@@ -1,9 +1,8 @@
 <?php
-//$_POST = json_decode(file_get_contents('php://input'), true);
+$db = require_once('database.php');
 
 //В какую таблицу добавляем запись
 $table = $_POST['table'];
-//$text = $_POST['msg'];
 $imges = '';
 
 //Сохранение картинок в папку
@@ -20,18 +19,14 @@ foreach ($_FILES["pictures"]["error"] as $key => $error) {
 $imges = substr($imges, 0, -1);
 $text = strip_tags($_POST['msg']);
 
-//$text = htmlentities($_POST['msg'], ENT_QUOTES, "UTF-8");
-//$text = htmlspecialchars($_POST['msg'], ENT_QUOTES);
-
-$db = new PDO('mysql:host=localhost;dbname=wall','root','');
-$db->exec("SET NAMES UTF8");
-
 //если было что-то передано добавляем в бд
 if($text!=="" || $imges!==""){
-    $query = $db->prepare("INSERT INTO $table SET text=:text, img=:img");
-
-   
-    $values = ['text' => $text,'img'=> $imges];
-    $query->execute($values);  
+    $db->insert($table,$text,$imges);
 }
+
+//Строки кода которые могут пригодиться:
+
+//$_POST = json_decode(file_get_contents('php://input'), true);
+//$text = htmlentities($_POST['msg'], ENT_QUOTES, "UTF-8");
+//$text = htmlspecialchars($_POST['msg'], ENT_QUOTES);
 ?>
