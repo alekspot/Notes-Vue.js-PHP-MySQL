@@ -3,7 +3,9 @@ const baseWebpackConfig = require("./webpack.base.config");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = merge.smart(baseWebpackConfig, {
-    mode: "production",
+    //mode: "production",
+    watch:true,
+    mode: "development",
     module: {
         rules: [
             {

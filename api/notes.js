@@ -21,6 +21,15 @@ async function deletePost(table,postId){
         postId: postId
     })   
 }
+
+async function changePost(table,id,text){
+    await axios.post('../ajax_change.php', {
+        table: table,
+        postId: id,
+        text: text
+    })   
+}
+
 async function addPost(postData){
     await axios.post('../ajax_add.php', postData, {
         headers: {
@@ -32,6 +41,7 @@ async function addPost(postData){
 export default {
     getPosts,
     deletePost,
-    addPost
+    addPost,
+    changePost
 }
 

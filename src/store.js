@@ -14,7 +14,9 @@ export const store = new Vuex.Store({
         currentTab:'notes',
         //список постов получаемых с сервера
         postLists:[],
-        searchText:null
+        searchText:null,
+        editId:'',
+        editText:'',
     },
     mutations:{
         'CHANGE_TABLE' (state,payload){
@@ -28,7 +30,13 @@ export const store = new Vuex.Store({
         },
         'CLEAR_SEARCH' (state){
             state.searchText = '';
-        }
+        },
+        'CHANGE_EDIT_TEXT'(state,payload){
+            state.editText = payload;    
+        },
+        'CHANGE_EDIT_ID'(state,payload){
+            state.editId = payload;    
+        },
     },
     actions:{
         clearSearch({commit}){
@@ -55,6 +63,23 @@ export const store = new Vuex.Store({
                     store.dispatch('initPostList');
                 })
             }        
+        },
+        changeEditId({commit},payload){
+            commit('CHANGE_EDIT_ID',payload)
+        },
+        changeEditText({commit},payload){
+            commit('CHANGE_EDIT_TEXT',payload)
+        },
+        changePost({state}){
+            let table = state.currentTab;
+            let text = state.editText;
+            let id = state.editId;
+            api.changePost(table,id,text).then(()=>{
+                store.dispatch('initPostList');
+                store.state.editId = '';
+                store.state.editText = '';
+            });
+
         },
         deletePost({state},payload){
             let table = state.currentTab;

@@ -42,9 +42,9 @@ Class Database {
         return $sth->execute($values);
     }
 
-    public function update($table,$text,$imges,$id){
-        $sth = $this->link->prepare("UPDATE $table SET text=:text, img=:img WHERE id=:id");
-        $values = ['text' => $text,'img'=> $imges,'id'=>$id];
+    public function update($table,$text,$id){
+        $sth = $this->link->prepare("UPDATE $table SET text=:text WHERE id=:id");
+        $values = ['text' => $text,'id'=>$id];
         return $sth->execute($values);
     }
     public function delete($table,$id){

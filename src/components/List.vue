@@ -1,20 +1,15 @@
 <template>
     <ul class="notes">
-        <li @dblclick="showAction = !showAction" v-for="(post,index) in postList" class="notes__item" :key="index">
-            <div class="notes__post">
-                <p class="notes__date">{{post.dt|dateFormat}}</p>
-                <img class="notes__img" v-for="img in imgFilter(post.img)" :key="img"  :src="'../uploads/' + img" alt="">
-                <p class="notes__text" v-html="post.text" v-linkified:options="{ className: 'notes__link' }"></p>  
-            </div>
-            <div v-if="showAction" class="notes__actions noselect">
-                <button @click="deletePost(post.id)" class="notes__actions_delete ripple"><i class="material-icons">delete</i></button>
-            </div>                  
-        </li>
+        <Post v-for="(post,index) in postList" :post="post" :index="index" :key="index"></Post>
     </ul>
 </template>
 <script>
+import Post from './Post.vue'
 export default {
    name:'List',
+   components:{
+    Post
+   },
    props:['postList'],
     data(){
         return {
@@ -72,7 +67,11 @@ export default {
             padding:10px;
             justify-content: space-between;
         }
-
+        &__post{
+            display: flex;
+            flex-direction: column;
+            width:100%;
+        }
         &__img {
             max-width: 200px;
         }
@@ -80,25 +79,17 @@ export default {
         &__link {
             word-break: break-all;
         }
-        &__actions {
-            margin:0 15px
-        }
-        &__actions_delete{
-            background: none;
-            border: none;
-            border-radius: 50px 50px;
-            align-self: center;
-            width: 30px;
-            height: 30px;
-            padding: 3px 1px 0 0;
-            outline:none;
-            color: gray;
-            cursor: pointer;
-        }
 
         &__date {
             font-size: 12px;
             font-weight: bold
+        }
+        &__edit {
+            align-self: stretch;
+            resize: none;
+            width: 100%;
+            margin:16px 0;
+            padding: 0;
         }
     }
   
