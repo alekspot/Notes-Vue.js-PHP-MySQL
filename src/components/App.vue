@@ -17,11 +17,6 @@ export default {
         AppInput,
         Search
     },
-    data(){
-        return {
-           
-        }
-    },
     computed:{
         allPosts:function(){
             return this.$store.getters.postLists
@@ -37,11 +32,6 @@ export default {
             }
             return this.allPosts
         }
-    },
-    created(){
-        setInterval(()=>{
-            this.$store.dispatch('initPostList');
-        },2000)  
     }
 }
 </script>
@@ -52,9 +42,7 @@ export default {
       height: 100vh;
       display: flex;
       flex-direction: column;
-      //justify-content: space-between;
-      position: relative;
-     
+      position: relative;   
   }
   .noselect{
       user-select: none;

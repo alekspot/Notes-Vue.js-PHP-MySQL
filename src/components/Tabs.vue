@@ -1,13 +1,13 @@
 <template>
-    <div class="tabs">
-        <ul class="tabs__navigation">
-           <li class="tabs__navigationItem ripple" ref="tabItem" v-for="(category, index) in categories" :key="category" @click="chooseList(index)">{{category}}</li>
-           <li class="tabs__line" :style="setWidthLine"></li>
+    <div class="content">
+        <ul class="content__navigation">
+           <li class="content__navigationItem ripple" ref="tabItem" v-for="(category, index) in categories" :key="category" @click="chooseList(index)">{{category}}</li>
+           <li class="content__line" :style="setWidthLine"></li>
         </ul>
 
-         <div ref="slide" class="tabs__window">
+         <div ref="slide" class="content__slider">
             <transition name="slide" mode="out-in"  v-on:enter="afterEnter">   
-                <List :postList="posts[currentTab]" class="tabs__item" :key="currentTab"></List>
+                <List :postList="posts[currentTab]" class="content__item" :key="currentTab"></List>
             </transition> 
          </div>
     </div>
@@ -23,7 +23,7 @@ export default {
     },
     data(){
         return {
-           categories:['Заметки','Код','Книги'],
+           categories:['Раздел 1','Раздел 2','Раздел 3'],
            test:'',
            line:{
               width:0,
@@ -62,11 +62,52 @@ export default {
         this.line.width = this.$refs.tabItem[0].clientWidth;
         window.addEventListener('resize',()=>{
              this.resizeTabs();
-        })
+        })   
+    },
+    updated(){
+        this.resizeTabs();
     }
 }
 </script>
 <style lang="less">
+
+.content {
+    position: relative;
+
+        &__navigation {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin:0;
+            position: fixed;
+            width: 100%;
+            z-index: 200;
+            background:#fff;
+            top:65px;
+        }
+        &__navigationItem {
+            flex:1;
+            text-align: center;
+            padding: 10px 20px;
+            cursor: pointer;
+        }  
+        &__line {
+            position: absolute;
+            background:rgb(7, 177, 245);
+            padding: 0;
+            height: 2px;
+            transition: left 0.4s;
+            bottom: 0;
+        }
+        &__slider {  
+            display:flex;
+            margin:103px 0 40px;    
+        }
+        &__item {  
+            flex: 0 0 100%;
+        }
+}
+    
 .slide-enter-active, .slide-leave-active {
   transition: all 0.4s;
 }
@@ -74,41 +115,4 @@ export default {
   opacity: 0;
   transform: translateX(-100%);
 }
-    .tabs {
-        position: relative;
-    }
-    .tabs__navigation {
-        display: flex;
-        list-style: none;
-        padding: 0;
-        margin:0;
-        position: fixed;
-        width: 100%;
-        z-index: 200;
-        background:#fff;
-        top:54px;
-    }
-    .tabs__navigationItem {
-        flex:1;
-        text-align: center;
-        padding: 10px 20px;
-        cursor: pointer;
-    }  
-    .tabs__line {
-        position: absolute;
-        background:gray;
-        padding: 0;
-        height: 2px;
-        transition: left 0.4s;
-        bottom: 0;
-    }
-    .tabs__window {
-        
-        display:flex;
-        margin:80px 0 40px;
-       
-    }
-    .tabs__item {  
-        flex: 0 0 100%;
-    }
 </style>

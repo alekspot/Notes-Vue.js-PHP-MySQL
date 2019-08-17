@@ -1,15 +1,14 @@
 <template>
-    <ul class="list">
-        <li @dblclick="showAction = !showAction" v-for="(post,index) in postList" class="list__item" :key="index">
-            <div class="list__post">
-                <p class="list__date">{{post.dt|dateFormat}}</p>
-                <img class="list__img" v-for="img in imgFilter(post.img)" :key="img"  :src="'../uploads/' + img" alt="">
-                <p class="list__text" v-html="post.text" v-linkified:options="{ className: 'list__link' }"></p>  
+    <ul class="notes">
+        <li @dblclick="showAction = !showAction" v-for="(post,index) in postList" class="notes__item" :key="index">
+            <div class="notes__post">
+                <p class="notes__date">{{post.dt|dateFormat}}</p>
+                <img class="notes__img" v-for="img in imgFilter(post.img)" :key="img"  :src="'../uploads/' + img" alt="">
+                <p class="notes__text" v-html="post.text" v-linkified:options="{ className: 'notes__link' }"></p>  
             </div>
-            <div v-if="showAction" class="list__actions noselect">
-                <button @click="deletePost(post.id)" class="list__actions_delete ripple"><i class="material-icons">delete</i></button>
-            </div>           
-           
+            <div v-if="showAction" class="notes__actions noselect">
+                <button @click="deletePost(post.id)" class="notes__actions_delete ripple"><i class="material-icons">delete</i></button>
+            </div>                  
         </li>
     </ul>
 </template>
@@ -41,10 +40,8 @@ export default {
                 "августа", "сентября", "октября",
                 "ноября", "декабря"
             ];
-            let monthId; 
-                      
+            let monthId;                   
             let arr = date.split('-');
-           // return arr[1][0];
             if(arr[1][0]=='0'){
                 monthId = +arr[1][1]
             } else monthId = + arr[1];
@@ -63,49 +60,46 @@ export default {
 }
 </script>
 <style lang="less">
-    .list {
+    .notes {
         padding: 0;
         margin:0;
-        list-style:none
+        list-style:none;
+
+        &__item{
+            display:flex;
+            align-items: center;
+            min-height: 80px;
+            padding:10px;
+            justify-content: space-between;
+        }
+
+        &__img {
+            max-width: 200px;
+        }
+
+        &__link {
+            word-break: break-all;
+        }
+        &__actions {
+            margin:0 15px
+        }
+        &__actions_delete{
+            background: none;
+            border: none;
+            border-radius: 50px 50px;
+            align-self: center;
+            width: 30px;
+            height: 30px;
+            padding: 3px 1px 0 0;
+            outline:none;
+            color: gray;
+            cursor: pointer;
+        }
+
+        &__date {
+            font-size: 12px;
+            font-weight: bold
+        }
     }
-    .list__item{
-        display:flex;
-        align-items: center;
-        min-height: 80px;
-        padding:10px;
-        justify-content: space-between;
-    }
-    .list__post {
-        
-        
-        
-    }
-    .list__img {
-        max-width: 200px;
-    }
-    .list__text {
-       
-    }
-    .list__link {
-        word-break: break-all;
-    }
-    .list__actions {
-        margin:0 15px
-    }
-    .list__actions_delete{
-        background: none;
-        border: none;
-        border-radius: 50px 50px;
-        align-self: center;
-        width: 30px;
-        height: 30px;
-        padding: 3px 1px 0 0;
-        outline:none;
-        color: gray;
-        cursor: pointer;
-    }
-    .list__date {
-        font-size: 12px;
-        font-weight: bold
-    }
+  
 </style>
