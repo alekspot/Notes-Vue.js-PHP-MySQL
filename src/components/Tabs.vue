@@ -35,7 +35,6 @@ export default {
     methods:{
         afterEnter(){
             setTimeout(this.resizeTabs,20)
-            
         },
         resizeTabs(){
             this.line.width = this.$refs.tabItem[0].clientWidth;

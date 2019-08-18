@@ -58,9 +58,6 @@ Class Database {
         if($result === false) {
             return [];
         }
-        foreach ($result as &$value) {
-            $value['text'] = nl2br($value['text']);
-        }
         //Изменить порядок
         $newArr = array_reverse($result);
         $json = json_encode($newArr);
@@ -70,7 +67,3 @@ Class Database {
 
 $db = new Database();
 return $db;
-//$db->execute("UPDATE `books` SET `text`='newAss' WHERE id =81");
-//$db->insert("INSERT INTO `books` SET text=:text, img=:img",['text'=>'SashaPotkin','img'=> '.png']);
-//$db->insert('code','testtt','');
-//$db->delete('code',79);

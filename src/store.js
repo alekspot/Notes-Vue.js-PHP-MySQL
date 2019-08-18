@@ -43,8 +43,8 @@ export const store = new Vuex.Store({
             commit('CHANGE_TABLE',payload)
         },
         async initPostList({commit}){
-            await api.getPosts();
-            commit('INIT_POST_LIST', posts);
+            
+            commit('INIT_POST_LIST', await api.getPosts());
         },
         async addPost({state},payload){
             if(payload.text!='' || payload.haveFiles){
@@ -58,6 +58,7 @@ export const store = new Vuex.Store({
         },
         async changePost({state},payload){  
             await api.changePost(state.currentTab,payload.id,payload.text);
+            store.dispatch('initPostList');
         },
         async deletePost({state},payload){
             await api.deletePost(state.currentTab, payload);

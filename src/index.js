@@ -7,6 +7,9 @@ import './less/test.less'
 import linkify from 'vue-linkify';
 Vue.directive('linkified', linkify);
 
+import VueTextareaAutosize from 'vue-textarea-autosize'
+Vue.use(VueTextareaAutosize);
+
 window.addEventListener('load',()=>{
     new Vue({
         store,
