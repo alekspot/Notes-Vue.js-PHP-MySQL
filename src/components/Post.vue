@@ -11,7 +11,8 @@
         <div v-if="showAction" class="actions noselect">
             <button class="action action__delete ripple" @click="deletePost(post.id)"><i class="material-icons">delete</i></button>
             <button class="action action__edit ripple" @click="changePost"><i class="material-icons">edit</i></button>
-        </div>                  
+        </div> 
+                         
     </li>
 </template>
 <script>
@@ -26,7 +27,7 @@ export default {
            edit: false,
            postHeight:0,
            newText:'',
-           isChange: false,
+           haveChangeInput: false,
         }
     },
     methods:{
@@ -40,18 +41,18 @@ export default {
         changePost:function(){
             if(!this.edit){
                 this.edit = true;
-                this.$store.dispatch('changeEditId', this.post.id);
-            } else if(this.edit && this.isChange){
+                //this.$store.dispatch('changeEditId', this.post.id);
+            } else if(this.edit && this.haveChangeInput){
                 alert('Сохранено');
-                this.$store.dispatch('changePost');
+                this.$store.dispatch('changePost',{text:this.post.text, id:this.post.id});
                 this.edit = false;
-                this.isChange = false;
+                this.haveChangeInput = false;
             } else {
                 this.edit = false;
             }   
         },
         changeEditText(e){
-            this.isChange = true;
+            this.haveChangeInput = true;
             this.$store.dispatch('changeEditText', e.target.value);
         }
     },
